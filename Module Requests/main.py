@@ -6,7 +6,7 @@ print(dirOfRequests)
 
 print(50*"*")
 
-linkGet = requests.get("https://jsonplaceholder.typicode.com/todos")  
+linkGet = requests.get("https://jsonplaceholder.typicode.com/todos")
 # If the output is "Response [200]", we can successfully access the website.
 print(linkGet)
 
