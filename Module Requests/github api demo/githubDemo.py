@@ -1,4 +1,3 @@
-from tkinter.tix import Tree
 import requests
 
 class GitHub:
