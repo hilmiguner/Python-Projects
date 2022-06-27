@@ -8,7 +8,7 @@ class GitHub:
 
     def getUser(self, userName):
         response = requests.get(self.api_url + "/users/" + userName)
-        if response.status_code == 200:    
+        if response.status_code == 200:
             return response.json()
 
     def getRepos(self, userName):
@@ -19,7 +19,7 @@ class GitHub:
     def createRepo(self, name):
         self.json = {
             "name" : name,
-            "description" : "This is a new repository.", 
+            "description" : "This is a new repository.",
             "homepage" : "https://github.com",
             "private" : True
         }

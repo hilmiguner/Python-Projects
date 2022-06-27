@@ -3,7 +3,7 @@ def printText(str1: str, str2: str):
     print(str2)
     print(50*"*")
 
-with open("BeautifulSoupMod/index.html", "r") as file:
+with open("index.html", "r") as file:
     html_doc = file.read()
 
 from bs4 import BeautifulSoup

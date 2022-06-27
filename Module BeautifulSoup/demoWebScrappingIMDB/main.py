@@ -11,13 +11,14 @@ else:
     soup = BeautifulSoup(html_doc, "html.parser")
 
     tbody = soup.find("tbody", {"class" : "lister-list"})
-    listOfTr = tbody.find_all("tr", limit=5)  # limit attribute limits the len of the list.
+    limit = int(input("How many movie do you want to see: "))
+    listOfTr = tbody.find_all("tr", limit=limit)  # limit attribute limits the len of the list.
     count = 1
     for tr in listOfTr:
         title = tr.find("td", {"class" : "titleColumn"}).find("a").text
         year = tr.find("td", {"class" : "titleColumn"}).find("span", {"class" : "secondaryInfo"}).text.strip("()")
         imdb_rating = tr.find("td", {"class" : "ratingColumn imdbRating"}).find("strong").text
-        print((f" {count}. MOVIE INFO ").center(50, "*"))
+        print(f" {count}. MOVIE INFO ".center(50, "*"))
         print(f"Title: {title}")
         print(f"Year: {year}")
         print(f"IMDB Rating: {imdb_rating}")
