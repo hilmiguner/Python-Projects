@@ -1,4 +1,3 @@
-from pickletools import int4
 from bs4 import BeautifulSoup
 import requests
 
