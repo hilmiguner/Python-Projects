@@ -1,0 +1,32 @@
+1656527551900	geckodriver	INFO	Listening on 127.0.0.1:52733
+1656527554925	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "52734" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\Casper\\AppData\\Local\\Temp\\rust_mozprofileCHeJE4"
+1656527555214	Marionette	INFO	Marionette enabled
+WebDriver BiDi listening on ws://localhost:52734
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Casper\\AppData\\Local\\Temp\\rust_mozprofileCHeJE4\\search.json.mozlz4", (void 0)))
+1656527556897	Marionette	INFO	Listening on port 52753
+DevTools listening on ws://localhost:52734/devtools/browser/07f1696f-eab3-424c-bca9-820597ca5780
+Read port: 52753
+1656527556964	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1656527565731	Marionette	INFO	Stopped listening on port 52753
+
+###!!! [Parent][PGPUParent] Error: RunMessage(msgname=PGPU::Msg_ShutdownVR) Channel closing: too late to send/recv, messages will be lost
+
+1656527593100	geckodriver	INFO	Listening on 127.0.0.1:53855
+1656527596132	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "53856" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\Casper\\AppData\\Local\\Temp\\rust_mozprofileE8LMhN"
+1656527596407	Marionette	INFO	Marionette enabled
+WebDriver BiDi listening on ws://localhost:53856
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Casper\\AppData\\Local\\Temp\\rust_mozprofileE8LMhN\\search.json.mozlz4", (void 0)))
+1656527597878	Marionette	INFO	Listening on port 53878
+Read port: 53878
+1656527597919	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+DevTools listening on ws://localhost:53856/devtools/browser/5e2735f9-c042-4290-9bf5-d79d1d83d19a
+1656527606830	Marionette	INFO	Stopped listening on port 53878
+
+###!!! [Parent][PContentParent] Error: Send(msgname=PContent::Msg_DestroyBrowsingContextGroup) Closed channel: cannot send/recv
+
+
+###!!! [Parent][PCompositorManagerParent] Error: RunMessage(msgname=PCompositorManager::Msg_RemoveSharedSurface) Channel error: cannot send/recv
+
+
+###!!! [Parent][PCompositorManagerParent] Error: RunMessage(msgname=PAPZ::Msg___delete__) Channel error: cannot send/recv
+
