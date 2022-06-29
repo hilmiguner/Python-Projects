@@ -1,7 +1,8 @@
 from selenium import webdriver
 import time
 
-driver = webdriver.Chrome(executable_path="../SELENIUM/chromedriver") # It's now program's web browser.
+driver = webdriver.Safari() # It's now program's web browser.
+# driver = webdriver.Chrome(executable_path="../SELENIUM/chromedriver") # It's for chrome.
 url = "https://github.com"
 
 driver.get(url)
