@@ -63,5 +63,5 @@ print(f'Before deleting a column: \n{df1}')
 df1 = df1.drop("Column6", axis=1)  # If we don't use redefinition, original series never changes.
 print(f'After deleting a column: \n{df1}')
 df1.drop("Column5", axis=1, inplace=True)  # But if we change the inplace value to True, 
-# changes automatically be apply on original series.
+# changes automatically be applied on original series.
 print(f'After deleting a column: \n{df1}')
