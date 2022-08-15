@@ -11,13 +11,17 @@ import numpy as np
 # plt.ylabel("Y-Axis")
 # plt.show()
 
+# -------------------------------------
 # Or you can use plot style.
+# -------------------------------------
 
 # plt.plot(x, y, "--g")  # "g--" means line is green and dashed. [marker][line][color]
 # plt.show()
 
 # plt.plot(x, y, "H-r")  # [Hexagon][Straight Line][Red] = [H][-][r]
 # plt.show()
+
+# -------------------------------------
 
 # data = np.linspace(0, 2, 100)
 # plt.plot(data, data, label="Linear")
@@ -27,7 +31,9 @@ import numpy as np
 # plt.legend()  # Shows info of the all lines on the graph.
 # plt.show()
 
+# -------------------------------------
 # Adding multiple graphs on a same window.
+# -------------------------------------
 
 # figure, axes = plt.subplots(3)  # 3 means there will be 3 graphs total.
 # # axes is a array which holds the every graph.
@@ -45,6 +51,8 @@ import numpy as np
 
 # plt.show()  # As you can see graph titles are blocked by other graph values so we need to change the layout.
 
+# -------------------------------------
+
 # x = np.linspace(0, 2, 100)
 # figure, axes = plt.subplots(3)
 
@@ -60,7 +68,9 @@ import numpy as np
 # plt.tight_layout()
 # plt.show()
 
+# -------------------------------------
 # We can use rows and columns as a layout.
+# -------------------------------------
 
 # x = np.linspace(0, 2, 100)
 
@@ -74,7 +84,9 @@ import numpy as np
 
 # plt.show()
 
+# -------------------------------------
 # Now let's use a real data.
+# -------------------------------------
 
 import pandas as pd
 
