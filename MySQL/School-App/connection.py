@@ -6,5 +6,3 @@ connection = mysql.connector.connect(
     password="mysql1234",
     database="schooldb"
 )
-
-print(connection)
