@@ -14,6 +14,7 @@ class Student:
         self.gender = gender
     
     def saveStudent(self):
+        Student.connection.connect()
         sql = "INSERT INTO students (no, name, surname, birthdate, gender) VALUES (%s, %s, %s, %s, %s)"
         value = (self.sno, self.name, self.sname, self.birthdate, self.gender)
         Student.cursor.execute(sql, value)
@@ -29,6 +30,7 @@ class Student:
 
     @staticmethod
     def saveStudents(values):
+        Student.connection.connect()
         sql = "INSERT INTO students (no, name, surname, birthdate, gender) VALUES (%s, %s, %s, %s, %s)"
         Student.cursor.executemany(sql, values)
 
@@ -41,18 +43,245 @@ class Student:
         finally:
             Student.connection.close()
             print("Database bağlantısı kesildi.")
-        
+
+    @staticmethod
+    def get_all_students():
+        Student.connection.connect()
+        Student.cursor.execute("SELECT * FROM students")
+        result = -1
+        try:
+            result = Student.cursor.fetchall()
+            if len(result) == 0:
+                print("Successfully fetched students but there is no student in database.")
+            else:
+                for student in result:
+                    print(f"Id: {student[0]}, No: {student[1]}, Name: {student[2]}, Surname: {student[3]}, Birthday: {student[4]}, Gender: {student[5]}")
+        except mysql.connector.errors.Error as err:
+            print("Hata ->", err)
+        finally:
+            Student.connection.close()
+
+    @staticmethod
+    def get_all_students_specify(*args):
+        Student.connection.connect()
+        if len(args) != 0:
+            str = "SELECT " + (",".join(args)) + " FROM students"
+            Student.cursor.execute(str)
+            result = -1
+            try:
+                result = Student.cursor.fetchall()
+                if len(result) == 0:
+                    print("Successfully fetched students but there is no student in database.")
+                else:
+                    temp = []
+                    for i in args:
+                        if i == "id":
+                            temp.append(0)
+                        elif i == "no":
+                            temp.append(1)
+                        elif i == "name":
+                            temp.append(2)
+                        elif i == "surname":
+                            temp.append(3)
+                        elif i == "birthdate":
+                            temp.append(4)
+                        elif i == "gender":
+                            temp.append(5)      
+                    str2 = ": {}, ".join(args) + ": {}"
+                    temp1 = []
+                    for i in result:
+                        for k in i:
+                            temp1.append(k)
+                        print(str2.format(*temp1))
+                        temp1.clear()
+            except mysql.connector.errors.Error as err:
+                print("Hata ->", err)
+            finally:
+                Student.connection.close()
+        else:
+            Student.get_all_students()
+
+    @staticmethod
+    def get_all_girls_name_surname():
+        Student.connection.connect()
+        sql = "SELECT name,surname FROM students WHERE gender='K'"
+        Student.cursor.execute(sql)
+        try:
+            result = Student.cursor.fetchall()
+            if len(result) == 0:
+                print("Successfully fetched students but there is no student in database.")
+            else:
+                for student in result:
+                    print(f"Name: {student[0]}, Surname: {student[1]}")
+        except mysql.connector.errors.Error as err:
+            print("Hata ->", err)
+        finally:
+            Student.connection.close()
+
+    @staticmethod
+    def get_all_students_by_birthyear(year: int):
+        Student.connection.connect()
+        sql = "SELECT * FROM students WHERE YEAR(birthdate)=%s"
+        Student.cursor.execute(sql, [year])
+        try:
+            result = Student.cursor.fetchall()
+            if len(result) == 0:
+                print("Successfully fetched students but there is no student in database.")
+            else:
+                for student in result:
+                    print(f"Id: {student[0]}, No: {student[1]}, Name: {student[2]}, Surname: {student[3]}, Birthday: {student[4]}, Gender: {student[5]}")
+        except mysql.connector.errors.Error as err:
+            print("Hata ->", err)
+        finally:
+            Student.connection.close()
+
+    @staticmethod
+    def get_students_by_name_and_birthyear(name: str, year: int):
+        Student.connection.connect()
+        sql = "SELECT * FROM students WHERE YEAR(birthdate)=%s and name=%s"
+        Student.cursor.execute(sql, [year, name])
+        try:
+            result = Student.cursor.fetchall()
+            if len(result) == 0:
+                print("Successfully fetched students but there is no student in database.")
+            else:
+                for student in result:
+                    print(f"Id: {student[0]}, No: {student[1]}, Name: {student[2]}, Surname: {student[3]}, Birthday: {student[4]}, Gender: {student[5]}")
+        except mysql.connector.errors.Error as err:
+            print("Hata ->", err)
+        finally:
+            Student.connection.close()
+    
+    @staticmethod
+    def get_students_by_including_txt_in_name_or_surname(txt: str):
+        Student.connection.connect()
+        sql = "SELECT * FROM students WHERE name LIKE '%{}%' or surname LIKE '%{}%'"
+        sql = sql.format(txt, txt)
+        Student.cursor.execute(sql)
+        try:
+            result = Student.cursor.fetchall()
+            if len(result) == 0:
+                print("Successfully fetched students but there is no student in database.")
+            else:
+                for student in result:
+                    print(f"Id: {student[0]}, No: {student[1]}, Name: {student[2]}, Surname: {student[3]}, Birthday: {student[4]}, Gender: {student[5]}")
+        except mysql.connector.errors.Error as err:
+            print("Hata ->", err)
+        finally:
+            Student.connection.close()
+
+    @staticmethod
+    def get_student_number_by_gender(gender: str):
+        Student.connection.connect()
+        sql = "SELECT COUNT(*) FROM students WHERE gender=%s"
+        Student.cursor.execute(sql, [gender])
+        result = -1
+        try:
+            result = Student.cursor.fetchone()
+        except mysql.connector.errors.Error as err:
+            print("Hata ->", err)
+        finally:
+            Student.connection.close()
+            return result
+
+    @staticmethod
+    def get_girls_by_name_order():
+        Student.connection.connect()
+        sql = "SELECT * FROM students WHERE gender='K' ORDER BY name"
+        Student.cursor.execute(sql)
+        try:
+            result = Student.cursor.fetchall()
+            if len(result) == 0:
+                print("Successfully fetched students but there is no student in database.")
+            else:
+                for student in result:
+                    print(f"Id: {student[0]}, No: {student[1]}, Name: {student[2]}, Surname: {student[3]}, Birthday: {student[4]}, Gender: {student[5]}")
+        except mysql.connector.errors.Error as err:
+            print("Hata ->", err)
+        finally:
+            Student.connection.close()
+
+    @staticmethod
+    def get_students_by_limit(limit: int):
+        Student.connection.connect()
+        sql = "SELECT * FROM students LIMIT %s"
+        Student.cursor.execute(sql, [limit])
+        try:
+            result = Student.cursor.fetchall()
+            if len(result) == 0:
+                print("Successfully fetched students but there is no student in database.")
+            else:
+                for student in result:
+                    print(f"Id: {student[0]}, No: {student[1]}, Name: {student[2]}, Surname: {student[3]}, Birthday: {student[4]}, Gender: {student[5]}")
+        except mysql.connector.errors.Error as err:
+            print("Hata ->", err)
+        finally:
+            Student.connection.close()
+ 
+# ---------------------------------------------------------------------------------------
 # Tek kayıt eklemek için.
 # ahmet = Student("102", "Ahmet", "Yılmaz", datetime(2005, 5, 17), "E")
 # ahmet.saveStudent()
 
 # Birden fazla kayıt eklemek için.
-ogrenciler = [
-    ("501","Ahmet","Yılmaz",datetime(2005, 5, 17),"E"),
-    ("502","Ali","Can",datetime(2005, 6, 17),"E"),
-    ("503","Canan","Tan",datetime(2005, 7, 7),"K"),
-    ("504","Ayşe","Taner",datetime(2005, 9, 23),"K"),
-    ("505","Bahadır","Toksöz",datetime(2004, 7, 27),"E"),
-    ("506","Ali","Cenk",datetime(2003, 8, 25),"E")
-]
-Student.saveStudents(ogrenciler)
+# ogrenciler = [
+#     ("501","Ahmet","Yılmaz",datetime(2005, 5, 17),"E"),
+#     ("502","Ali","Can",datetime(2005, 6, 17),"E"),
+#     ("503","Canan","Tan",datetime(2005, 7, 7),"K"),
+#     ("504","Ayşe","Taner",datetime(2005, 9, 23),"K"),
+#     ("505","Bahadır","Toksöz",datetime(2004, 7, 27),"E"),
+#     ("506","Ali","Cenk",datetime(2003, 8, 25),"E")
+# ]
+# Student.saveStudents(ogrenciler)
+# ---------------------------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------------------------
+#   Aşağıdaki sorguları yazınız.
+#   a- Tüm öğrenci kayıtlarını alınız.
+Student.get_all_students()
+
+print(100*"*")
+
+#   b- Tüm öğrencilerin sadece öğrenci no, ad ve soyad bilgilerini alınız.
+Student.get_all_students_specify("no", "name", "surname")
+
+print(100*"*")
+
+#   c- Sadece kız öğrencilerin ad ve soyadlarını alınız.
+Student.get_all_girls_name_surname()
+
+print(100*"*")
+
+#   d- 2003 doğumlu öğrenci bilgilerini alınız. 
+Student.get_all_students_by_birthyear(2003)
+
+print(100*"*")
+
+#   e- İsmi Ali ve doğum tarihi 2005 olan öğrenci bilgilerini alınız.
+Student.get_students_by_name_and_birthyear("Ali", 2005)
+
+print(100*"*")
+
+#   f- ad veya soyadı içinde 'an' ifadesi geçen kayıtları alınız. 
+Student.get_students_by_including_txt_in_name_or_surname("an")
+
+print(100*"*")
+
+#   g- Kaç erkek öğrenci vardır ?
+result = Student.get_student_number_by_gender("E")
+if result == -1:
+    print("Successfully fetched students but there is no student in database according these filters.")
+else:
+    print(f"There are total {result[0]} male students.")
+
+print(100*"*")
+
+#   h- Kız öğrencileri harf sırasına göre getiriniz.
+Student.get_girls_by_name_order()
+
+print(100*"*")
+
+#   i- Tüm öğrencilerin ilk 5 tanesini getir.
+Student.get_students_by_limit(8)
+# ---------------------------------------------------------------------------------------
