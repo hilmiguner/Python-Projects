@@ -284,4 +284,6 @@ print(100*"*")
 
 #   i- Tüm öğrencilerin ilk 5 tanesini getir.
 Student.get_students_by_limit(8)
+
+print(100*"*")
 # ---------------------------------------------------------------------------------------
