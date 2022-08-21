@@ -11,7 +11,7 @@ class DBManager:
     def __del__(self) -> None:
         try:
             self.connection.disconnect()
-            print("Connection with database has been disconnected successfully.")
+            print("Connection with database has been successfully disconnected.")
         except mysql.connector.Error as err:
             print("Error has been occured while trying to disconnect the connection to database ->", err)
 
@@ -35,6 +35,19 @@ class DBManager:
         except mysql.connector.Error as err:
             print("Error has been occured ->", err)
     
+    def get_all_students(self):
+        sql = "SELECT * FROM (student INNER JOIN class ON student.classId=class.id) LEFT JOIN teacher ON class.teacherId=teacher.id ORDER BY student.id"
+        self.cursor.execute(sql)
+        student_list = []
+        try:
+            students = self.cursor.fetchall()
+            if students is not None:
+                for student in students:
+                    student_list.append(student)
+                return student_list
+        except mysql.connector.Error as err:
+            print("Error has been occured ->", err)
+
     def get_student_by_id(self, id: int) -> Student:
         sql = "SELECT * FROM student WHERE id=%s"
         self.cursor.execute(sql, [id])
@@ -55,7 +68,24 @@ class DBManager:
         except mysql.connector.Error as err:
             print("Error has been occured ->", err)
 
+    def del_student(self, id: int):
+        sql = "DELETE FROM student WHERE id=%s"
+        self.cursor.execute(sql, [id])
+        try:
+            self.connection.commit()
+            print(f"{self.cursor.rowcount} registry has been deleted from table.")
+        except mysql.connector.errors.Error as err:
+            print("Error ->", err)
+
     def add_teacher(self, teacher: Teacher):
-        pass
+        sql = "INSERT INTO teacher (id, branch, name, surname, birthdate, gender) VALUES (%s, %s, %s, %s, %s, %s)"
+        value = (teacher.id, teacher.branch, teacher.name, teacher.surname, teacher.birthdate, teacher.gender)
+        self.cursor.execute(sql, value)
+        try:
+            self.connection.commit()
+            print(f"Entry with {self.cursor.lastrowid} id has been registered.")
+        except mysql.connector.errors.Error as err:
+            print("Error has been occured ->", err)
+    
     def edit_teacher(self, teacher: Teacher):
         pass
