@@ -17,6 +17,6 @@ def window():
 
     window.show()  # Sets the window visible.
 
-    sys.exit(app.exec_())  # sys.exit() kills the terminal so when we closed the app (app.exec_()), terminal will be killed.
+    app.exec()  # app.exec() kills the terminal when we closed the app.
 
 window()
