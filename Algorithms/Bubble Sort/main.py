@@ -1,6 +1,3 @@
-from logging.config import listen
-
-
 liste = [31, 12, 24, 36, 48, 55, 3]
 
 length = len(liste)
